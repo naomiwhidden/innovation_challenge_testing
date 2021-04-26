@@ -19,3 +19,7 @@ DJ_DEBUG=True
 6. Open a browser and navigate to [localhost:8000](http://localhost:8000/)
 7. When finished, press `control + c` to stop the docker container
 8. `docker-compose down` to delete the stopped container
+
+### Some good commands to know with docker and django
+1. `docker-compose run web python manage.py makemigrations`
+2. `docker-compose run web python manage.py migrate`
