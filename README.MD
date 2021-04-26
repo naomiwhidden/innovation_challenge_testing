@@ -6,7 +6,7 @@
     3. `pip install -r requirements.txt`
 
 ## Set Up
-1. `git clone https://github.com/phansiri/simple_covid_tracker_scanner.git`
+1. `git clone https://github.com/phansiri/innovation_challenge_testing.git`
 2. `cd root directory`
 3. Create `.env` in the `iiimef_project` directory with something like:
 ```.env
