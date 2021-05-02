@@ -13,7 +13,7 @@ DB_SCHEMA = os.environ.get('MYSQL_DB')
 def import_equip():
     """
     Reads exported CSV of EQUIP_SUM tab from Blank Concept of Support Model UNCLASSIFIED aka Redonkulator
-    and populates equipment table with complete inventory list.
+    and populates equipment table with complete edl list.
     :return: void
     """
     df = pd.read_csv('redonkulator_app/db/equip.csv')
@@ -44,10 +44,10 @@ def import_equip():
     df.to_sql(name='equipment', con=engine, schema='redonkulator', if_exists='append', index=False)
 
 
-def import_generic_inventory():
+def import_generic_edl():
     """
     Reads exported CSV of EQUIP_SUM tab from Blank Concept of Support Model UNCLASSIFIED aka Redonkulator
-    and populates generic_inventory table with quantities of each equipment item expected to reside in various
+    and populates generic_edl table with quantities of each equipment item expected to reside in various
     unit types; i.e. AAV Bn, Arty Bn, CAB, etc.
     :return: void
     """
@@ -74,12 +74,13 @@ def import_generic_inventory():
 
     engine = db.create_engine(f'mysql+mysqldb://{DB_USER}:{DB_PWD}@{DB_HOST}:{DB_PORT}/{DB_SCHEMA}')
     for col in df:
-        unit_df = df[['equipment_id', col]].copy()
-        unit_df.rename(columns={
-            col: 'quantity'
-        }, inplace=True)
-        unit_df['unit_type'] = col
-        unit_df.to_sql(name='generic_inventory', con=engine, schema='redonkulator', if_exists='append', index=False)
+        if col != 'equipment_id':
+            unit_df = df[['equipment_id', col]].copy()
+            unit_df.rename(columns={
+                col: 'quantity'
+            }, inplace=True)
+            unit_df['unit_type'] = col
+            unit_df.to_sql(name='generic_edl', con=engine, schema='redonkulator', if_exists='append', index=False)
 
 
 def tamcn_to_id(row):
@@ -99,5 +100,5 @@ def tamcn_to_id(row):
 
 
 if __name__ == '__main__':
-    # import_equip()
-    import_generic_inventory()
+    import_equip()
+    import_generic_edl()

@@ -180,25 +180,25 @@ CREATE TABLE IF NOT EXISTS `redonkulator`.`equipment`
 
 
 -- -----------------------------------------------------
--- Table `redonkulator`.`unit_inventory`
+-- Table `redonkulator`.`unit_edl`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `redonkulator`.`unit_inventory`;
+DROP TABLE IF EXISTS `redonkulator`.`unit_edl`;
 
-CREATE TABLE IF NOT EXISTS `redonkulator`.`unit_inventory`
+CREATE TABLE IF NOT EXISTS `redonkulator`.`unit_edl`
 (
     `id`           INT NOT NULL AUTO_INCREMENT,
-    `unit_id`      INT NULL,
-    `equipment_id` INT NULL,
-    `on_hand`      INT NULL,
+    `unit_id`      INT NOT NULL,
+    `equipment_id` INT NOT NULL,
+    `quantity`     INT NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_unit_inventory_units_idx` (`unit_id` ASC) VISIBLE,
-    INDEX `fk_unit_invetory_equipment1_idx` (`equipment_id` ASC) VISIBLE,
-    CONSTRAINT `fk_unit_inventory_units`
+    INDEX `fk_unit_edl_units_idx` (`unit_id` ASC) VISIBLE,
+    INDEX `fk_unit_edl_equipment1_idx` (`equipment_id` ASC) VISIBLE,
+    CONSTRAINT `fk_unit_edl_units`
         FOREIGN KEY (`unit_id`)
             REFERENCES `redonkulator`.`units` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-    CONSTRAINT `fk_unit_inventory_equipment1`
+    CONSTRAINT `fk_unit_edl_equipment1`
         FOREIGN KEY (`equipment_id`)
             REFERENCES `redonkulator`.`equipment` (`id`)
             ON DELETE CASCADE
@@ -208,30 +208,194 @@ CREATE TABLE IF NOT EXISTS `redonkulator`.`unit_inventory`
 
 
 -- -----------------------------------------------------
--- Table `redonkulator`.`equip_utilization`
+-- Table `redonkulator`.`locations`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `redonkulator`.`equip_utilization`;
+DROP TABLE IF EXISTS `redonkulator`.`locations`;
 
-CREATE TABLE IF NOT EXISTS `redonkulator`.`equip_utilization`
+CREATE TABLE IF NOT EXISTS `redonkulator`.`locations`
+(
+    `id`       INT         NOT NULL AUTO_INCREMENT,
+    `location` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `location_UNIQUE` (`location` ASC) VISIBLE
+)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `redonkulator`.`exercise_edl`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redonkulator`.`exercise_edl`;
+
+CREATE TABLE IF NOT EXISTS `redonkulator`.`exercise_edl`
 (
     `id`           INT         NOT NULL AUTO_INCREMENT,
     `unit_id`      INT         NOT NULL,
-    `exercises_id` INT         NULL,
-    `qty`          INT         NOT NULL,
+    `exercises_id` INT         NOT NULL,
+    `equipment_id` INT         NOT NULL,
+    `quantity`     INT         NOT NULL,
     `location`     VARCHAR(45) NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_equip_utilization_exercises1_idx` (`exercises_id` ASC) VISIBLE,
-    INDEX `fk_equip_utilization_units1_idx` (`unit_id` ASC) VISIBLE,
-    CONSTRAINT `fk_equip_utilization_exercises1`
+    INDEX `fk_exercise_edl_exercises1_idx` (`exercises_id` ASC) VISIBLE,
+    INDEX `fk_exercise_edl_units1_idx` (`unit_id` ASC) VISIBLE,
+    INDEX `fk_exercise_edl_locations1_idx` (`location` ASC) VISIBLE,
+    INDEX `fk_exercise_edl_equipment1_idx` (`equipment_id` ASC) VISIBLE,
+    CONSTRAINT `fk_exercise_edl_exercises1`
         FOREIGN KEY (`exercises_id`)
             REFERENCES `redonkulator`.`exercises` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-    CONSTRAINT `fk_equip_utilization_units1`
+    CONSTRAINT `fk_exercise_edl_units1`
         FOREIGN KEY (`unit_id`)
             REFERENCES `redonkulator`.`units` (`id`)
             ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `fk_exercise_edl_locations1`
+        FOREIGN KEY (`location`)
+            REFERENCES `redonkulator`.`locations` (`location`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `fk_exercise_edl_equipment1`
+        FOREIGN KEY (`equipment_id`)
+            REFERENCES `redonkulator`.`equipment` (`id`)
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `redonkulator`.`generic_edl`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redonkulator`.`generic_edl`;
+
+CREATE TABLE IF NOT EXISTS `redonkulator`.`generic_edl`
+(
+    `id`           INT         NOT NULL AUTO_INCREMENT,
+    `unit_type`    VARCHAR(45) NOT NULL,
+    `equipment_id` INT         NOT NULL,
+    `quantity`     INT         NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_generic_edl_equipment1_idx` (`equipment_id` ASC) VISIBLE,
+    UNIQUE INDEX `unit_type_equipment_id_UNIQUE` (`unit_type` ASC, `equipment_id` ASC) VISIBLE,
+    CONSTRAINT `fk_generic_edl_equipment1`
+        FOREIGN KEY (`equipment_id`)
+            REFERENCES `redonkulator`.`equipment` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `redonkulator`.`climates`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redonkulator`.`climates`;
+
+CREATE TABLE IF NOT EXISTS `redonkulator`.`climates`
+(
+    `id`      INT         NOT NULL AUTO_INCREMENT,
+    `climate` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`)
+)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `redonkulator`.`exercise_unit_planning_factors`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redonkulator`.`exercise_unit_planning_factors`;
+
+CREATE TABLE IF NOT EXISTS `redonkulator`.`exercise_unit_planning_factors`
+(
+    `id`                           INT           NOT NULL AUTO_INCREMENT,
+    `unit_id`                      INT           NOT NULL,
+    `exercise_id`                  INT           NOT NULL,
+    `aslt_rom`                     INT           NOT NULL,
+    `aslt_op_hours`                INT           NOT NULL,
+    `sustain_rom`                  INT           NOT NULL,
+    `sustain_op_hours`             INT           NOT NULL,
+    `climate_id`                   INT           NOT NULL,
+    `min_class_one_water_gal`      DECIMAL(4, 1) NOT NULL,
+    `sustain_class_one_water_gals` DECIMAL(4, 1) NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_exercise_unit_planning_factors_units1_idx` (`unit_id` ASC) VISIBLE,
+    INDEX `fk_exercise_unit_planning_factors_exercises1_idx` (`exercise_id` ASC) VISIBLE,
+    INDEX `fk_exercise_unit_planning_factors_climates1_idx` (`climate_id` ASC) VISIBLE,
+    CONSTRAINT `fk_exercise_unit_planning_factors_units1`
+        FOREIGN KEY (`unit_id`)
+            REFERENCES `redonkulator`.`units` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT `fk_exercise_unit_planning_factors_exercises1`
+        FOREIGN KEY (`exercise_id`)
+            REFERENCES `redonkulator`.`exercises` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT `fk_exercise_unit_planning_factors_climates1`
+        FOREIGN KEY (`climate_id`)
+            REFERENCES `redonkulator`.`climates` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `redonkulator`.`audit_actions`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redonkulator`.`audit_actions`;
+
+CREATE TABLE IF NOT EXISTS `redonkulator`.`audit_actions`
+(
+    `id`         INT          NOT NULL AUTO_INCREMENT,
+    `dtg`        DATETIME     NOT NULL,
+    `user_id`    INT          NOT NULL,
+    `table_name` VARCHAR(45)  NOT NULL,
+    `row_id`     INT          NOT NULL,
+    `action`     VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_audit_actions_users1_idx` (`user_id` ASC) VISIBLE,
+    CONSTRAINT `fk_audit_actions_users1`
+        FOREIGN KEY (`user_id`)
+            REFERENCES `redonkulator`.`users` (`id`)
+            ON DELETE RESTRICT
+            ON UPDATE CASCADE
+)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `redonkulator`.`exercise_personnel`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `redonkulator`.`exercise_personnel`;
+
+CREATE TABLE IF NOT EXISTS `redonkulator`.`exercise_personnel`
+(
+    `id`          INT NOT NULL AUTO_INCREMENT,
+    `exercise_id` INT NOT NULL,
+    `unit_id`     INT NOT NULL,
+    `location_id` INT NOT NULL,
+    `quantity`    INT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_exercise_personnel_locations1_idx` (`location_id` ASC) VISIBLE,
+    INDEX `fk_exercise_personnel_units1_idx` (`unit_id` ASC) VISIBLE,
+    INDEX `fk_exercise_personnel_exercises1_idx` (`exercise_id` ASC) VISIBLE,
+    CONSTRAINT `fk_exercise_personnel_locations1`
+        FOREIGN KEY (`location_id`)
+            REFERENCES `redonkulator`.`locations` (`id`)
+            ON DELETE RESTRICT
+            ON UPDATE CASCADE,
+    CONSTRAINT `fk_exercise_personnel_units1`
+        FOREIGN KEY (`unit_id`)
+            REFERENCES `redonkulator`.`units` (`id`)
+            ON DELETE RESTRICT
+            ON UPDATE CASCADE,
+    CONSTRAINT `fk_exercise_personnel_exercises1`
+        FOREIGN KEY (`exercise_id`)
+            REFERENCES `redonkulator`.`exercises` (`id`)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE
 )
     ENGINE = InnoDB;
 
