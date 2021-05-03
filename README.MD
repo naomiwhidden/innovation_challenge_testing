@@ -2,7 +2,7 @@
 1. Install Docker CLI
 2. Recommend creating a virtual env for local development outside of docker
     1. `python3 -m venv myvenv`
-    2. `source myvenv/bin/activate`
+    2. `source myvenv/bin/activate`  or `myvenv\Scripts\activate` for windows
     3. `pip install -r requirements.txt`
 
 ## Set Up
