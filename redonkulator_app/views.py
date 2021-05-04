@@ -6,3 +6,6 @@ def dashboard(request):
     template = loader.get_template('redonkulator_app/index.html')
     context = {}
     return HttpResponse(template.render(context, request))
+
+def landing(request, *args, **kwargs):
+    return render(request, 'landing.html')
