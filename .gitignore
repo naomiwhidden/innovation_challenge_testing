@@ -1,5 +1,6 @@
 *.sqlite3
 *.env
+*.env.db
 myvenv
 .idea
 __pycache__
