@@ -3,3 +3,5 @@ djangorestframework==3.12.4
 django-filter==2.4.0
 mysql-connector-python==8.0.24
 SQLAlchemy==1.4.12
+mysqlclient==2.0.3
+django-mysql==3.11.1
