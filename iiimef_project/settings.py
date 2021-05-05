@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("DJ_SECRET_KEY", default='Testing')
 DEBUG = os.environ.get("DJ_DEBUG", default=True)
-ALLOWED_HOSTS = os.environ.get("DJ_ALLOWED_HOSTS")
+#ALLOWED_HOSTS = os.environ.get("DJ_ALLOWED_HOSTS")
 
 # Application definition
 
