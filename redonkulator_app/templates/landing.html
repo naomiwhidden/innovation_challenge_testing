@@ -8,7 +8,7 @@
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
 
 {% if exercise_list %}
-    <ul>
+    
     {% for ex in exercise_list %}
     <div class="col">
       <div class="p-2">
@@ -27,9 +27,9 @@
     </div>
 
     {% endfor %}
-    </ul>
+    
 {% else %}
-    <p>No Exercise with that name.</p>
+    <p>No Exercises</p>
 {% endif %}
 
     </div>
@@ -43,61 +43,32 @@
 <div class="container custom-container">Units
   <div class="p-5 border bg-dark">
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-      
-      <div class="col">
-        <div class="p-2">
 
-          <div class="card" style="width: 13rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">7th Comm Bn</h5>
-              <p class="card-text"></p>
-              <a href="#" class="btn btn-primary">Select</a>
+{% if unit_list %}
+    
+    {% for unt in unit_list %}
+    <div class="col">
+      <div class="p-2">
+        <li><a href="#"></a>
+
+        <div class="card" style="width: 13rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ unt.short_name }}</h5>
+            <p class="card-text">{{ unt.uic }}</p>
+            <a href="/{{ exercise.name }}/" class="btn btn-primary">Select</a>
           </div>
         </div>
+        </li>
+      </div>
+    </div>
 
-        </div>
-      </div>
+    {% endfor %}
+    
+{% else %}
+    <p>No Exercises</p>
+{% endif %}
 
-      <div class="col">
-        <div class="p-2">
-
-          <div class="card" style="width: 13rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">7th Comm Bn</h5>
-              <p class="card-text"></p>
-              <a href="#" class="btn btn-primary">Select</a>
-          </div>
-        </div>
-
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
     </div>
   </div>
 </div>

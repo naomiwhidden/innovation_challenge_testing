@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.http import Http404
 from django.template import loader
 
-from .models import Exercise
+from .models import Exercise, Units
 
 
 def dashboard(request):
@@ -13,9 +13,11 @@ def dashboard(request):
 
 
 def landing(request, *args, **kwargs):
-    exercise_list = Exercise.objects.order_by('-startdate')[:10]
+    exercise_list = Exercise.objects.order_by('-startdate')
+    unit_list = Units.objects.order_by('-uic')
     context = {
-        'exercise_list': exercise_list
+        'exercise_list': exercise_list,
+        'unit_list': unit_list
     }
     return render(request, 'landing.html', context)
 
