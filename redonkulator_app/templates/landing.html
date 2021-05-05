@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 
+
 {% block content %}
 
 <div class="container custom-container">Exercises
@@ -19,7 +20,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ ex.exercise }}</h5>
             <p class="card-text">{{ ex.evolution }}</p>
-            <a href="/{{ ex.exercise }}/" class="btn btn-primary">Select</a>
+            <a href="/exercise/{{ ex.exercise }}/" class="btn btn-primary">Select</a>
           </div>
         </div>
         </li>
@@ -70,7 +71,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ unt.short_name }}</h5>
             <p class="card-text">{{ unt.uic }}</p>
-            <a href="/{{ unt.short_name }}/" class="btn btn-primary">Select</a>
+            <a href="/unit/{{ unt.short_name }}/" class="btn btn-primary">Select</a>
           </div>
         </div>
         </li>

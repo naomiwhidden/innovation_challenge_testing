@@ -22,6 +22,19 @@ def landing(request, *args, **kwargs):
     return render(request, 'landing.html', context)
 
 
-def detail(request, exercise, *args, **kwargs):
+def exercise_detail(request, exercise, *args, **kwargs):
     ex = get_object_or_404(Exercise, pk=exercise.exercise)
-    return render(request, 'exercisedetail.html', {'exercise': ex})
+    return render(request, 'exercise/exercise_detail.html', {'exercise': ex})
+
+
+def unit_detail(request, unit, *args, **kwargs):
+    unt = get_object_or_404(Units, pk=unit.short_name)
+    return render(request, 'unit/unit_detail.html', {'unit': unt})
+
+
+def new_exercise(request, *args, **kwargs):
+    return render(request, 'exercise/new_exercise.html')
+
+
+def new_unit(request, *args, **kwargs):
+    return render(request, 'unit/new_unit.html')

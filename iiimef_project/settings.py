@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'redonkulator_app.apps.RedonkulatorAppConfig',
     'rest_framework',
+    'menu'
 ]
 
 MIDDLEWARE = [

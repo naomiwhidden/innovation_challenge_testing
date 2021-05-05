@@ -13,7 +13,7 @@
   {% block navbar %}
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #001f3d;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a href="/" class="navbar-brand" href="#">
             <img src="\static\images\ega.png" alt="" width="50" height="50">
             MAGTF Logistics Planning Tool
           </a>
@@ -26,9 +26,17 @@
           <a class="nav-link" href="#">
             <img src="\static\images\profile.png" alt="" width="40" height="40">
           </a>
-          <a class="nav-link" href="#">
-            <img src="\static\images\hamburgermenu.png" alt="" width="40" height="40">
-          </a>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="\static\images\hamburgermenu.png" alt="" width="40" height="40">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+              <li><a href="/account/" class="dropdown-item" href="#">Account</a></li>
+              <li><a href="/about/" class="dropdown-item" href="#">About</a></li>
+            </ul>
+          </li>
+
         </div>
       </div>
     </div>
