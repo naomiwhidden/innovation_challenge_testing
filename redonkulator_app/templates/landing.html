@@ -1,54 +1,56 @@
 {% extends 'base.html' %}
 
 
+
 {% block content %}
+
 <div class="container custom-container">Exercises
   <div class="p-5 border bg-dark">
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-      <div class="col">
-        <div class="p-2">
 
-          <div class="card" style="width: 13rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">Cobra Gold</h5>
-              <p class="card-text"></p>
-              <a href="#" class="btn btn-primary">Select</a>
+{% if exercise_list %}
+    
+    {% for ex in exercise_list %}
+    <div class="col">
+      <div class="p-2">
+        <li><a href="#"></a>
+
+        <div class="card" style="width: 13rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ ex.exercise }}</h5>
+            <p class="card-text">{{ ex.evolution }}</p>
+            <a href="/exercise/{{ ex.exercise }}/" class="btn btn-primary">Select</a>
           </div>
         </div>
+        </li>
+      </div>
+    </div>
 
-        </div>
+    {% endfor %}
+    
+{% else %}
+    <p>No Exercises</p>
+{% endif %}
+<div class="col">
+  <div class="p-2">
+    <li><a href="#"></a>
+
+    <div class="card" style="width: 13rem;">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Exercise Name</h5>
+        <p class="card-text">Exercise Evolution</p>
+        <a href="/newexercise/" class="btn btn-success">New Exercise</a>
       </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
+    </div>
+    </li>
+  </div>
+</div>
     </div>
   </div>
 </div>
+
 {% endblock %}
 
 
@@ -56,47 +58,46 @@
 <div class="container custom-container">Units
   <div class="p-5 border bg-dark">
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-      <div class="col">
-        <div class="p-2">
 
-          <div class="card" style="width: 13rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">7th Comm Bn</h5>
-              <p class="card-text"></p>
-              <a href="#" class="btn btn-primary">Select</a>
+{% if unit_list %}
+    
+    {% for unt in unit_list %}
+    <div class="col">
+      <div class="p-2">
+        <li><a href="#"></a>
+
+        <div class="card" style="width: 13rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ unt.short_name }}</h5>
+            <p class="card-text">{{ unt.uic }}</p>
+            <a href="/unit/{{ unt.short_name }}/" class="btn btn-primary">Select</a>
           </div>
         </div>
+        </li>
+      </div>
+    </div>
 
-        </div>
+    {% endfor %}
+    
+{% else %}
+    <p>No Exercises</p>
+{% endif %}
+<div class="col">
+  <div class="p-2">
+    <li><a href="#"></a>
+
+    <div class="card" style="width: 13rem;">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Unit Name</h5>
+        <p class="card-text">Unit UIC</p>
+        <a href="/newunit/" class="btn btn-success">New Unit</a>
       </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
-      <div class="col">
-        <div class="p-2"></div>
-      </div>
+    </div>
+    </li>
+  </div>
+</div>
     </div>
   </div>
 </div>
