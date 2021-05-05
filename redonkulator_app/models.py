@@ -8,7 +8,7 @@ class Exercise(models.Model):
     logo =  models.BinaryField()
 
     def __str__(self):
-        return f"{self.exercise}"
+        return f"Exercise: {self.exercise}\t Evolution: {self.evolution}"
 
 class Locations(models.Model):
     location = models.CharField(max_length=45)
