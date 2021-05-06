@@ -1,1 +1,30 @@
 {% extends 'base.html' %}
+
+<h3>Create New Unit</h3>
+<hr>
+
+{%block content %}
+<div class="container row-5">
+    <form action="" method="post">
+        {%csrf_token %}
+        <a>Unit Name:</a>
+        <input id="id_name" type="text" name="unit name" value="" required="">
+        <br/>
+        <a>Unit Idenitification Code (UIC):</a>
+        <input uic= "id_uic" type="text" name="" value="" required="">
+        <br/>
+        <a>Marine Corps Code (MCC):</a>
+        <input mcc= "id_mcc" type="text" name="" value="" required="">
+        <br/>
+        <a>Responsible Unit Code (RUC):</a>
+        <input ruc="id_ruc" type="text" name="" value="" required="">
+        <br/>
+        <a>Type of Unit:</a>
+        <input type="id_type" type="text" name="" value="" required="">
+        <br/>
+        <a href="/unit/{{ unt.short_name }}/" class="btn btn-primary">Submit</a>
+    </form>
+</div>
+{% endblock %}
+
+
